@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --paper: #fffefa;
+  --paper-raised: #f7f5f0;
+  --ink: #2e2e2c;
+  --ink-muted: #5c5b57;
+  --accent: #d22027;
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, var(--paper));
+  --line: #e4e2dc;
+  --shadow: color-mix(in srgb, var(--ink) 10%, transparent);
+}
+
+.dark {
+  --paper: #1c1b19;
+  --paper-raised: #262522;
+  --ink: #f4f2ec;
+  --ink-muted: #b8b4ac;
+  --accent: #e04a4f;
+  --accent-soft: color-mix(in srgb, var(--accent) 18%, var(--paper));
+  --line: #3a3834;
+  --shadow: rgb(0 0 0 / 0.35);
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-line: var(--line);
+  --font-sans: var(--font-jost);
+  --font-display: var(--font-russo);
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  overflow-x: clip;
+  max-width: 100%;
+  min-width: 0;
+}
+
+body > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.font-display {
+  font-family: var(--font-russo), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.page-pad {
+  padding-inline: clamp(1.25rem, 4vw, 4.5rem);
+}
+
+.section-y {
+  padding-block: clamp(3.5rem, 8vw, 8rem);
+}
+
+.site-name {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  font-size: clamp(2.6rem, 13vw, 7.25rem);
+  line-height: 0.95;
+  overflow-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+  .site-name {
+    font-size: clamp(2.35rem, calc(100vw / 12.5), 7.25rem);
+  }
+}
