@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
-import { profile } from "@/content/profile";
 
-const NAME = profile.name;
 const PRE_MS = 1500;
 const CHAR_MS = 70;
 const POST_MS = 1200;
@@ -16,7 +14,7 @@ function subscribeReduce(onChange: () => void) {
   return () => mq.removeEventListener("change", onChange);
 }
 
-export function TypeOnName() {
+export function TypeOnName({ name }: { name: string }) {
   const skip = useSyncExternalStore(
     subscribeReduce,
     () => window.matchMedia(REDUCE_QUERY).matches,
@@ -42,7 +40,7 @@ export function TypeOnName() {
       if (cancelled) return;
       setPhase("type");
 
-      for (let i = 1; i <= NAME.length; i += 1) {
+      for (let i = 1; i <= name.length; i += 1) {
         await wait(CHAR_MS);
         if (cancelled) return;
         setShown(i);
@@ -60,7 +58,7 @@ export function TypeOnName() {
       cancelled = true;
       timers.forEach((id) => window.clearTimeout(id));
     };
-  }, [skip]);
+  }, [skip, name]);
 
   useEffect(() => {
     if (skip || phase === "done") return;
@@ -70,21 +68,21 @@ export function TypeOnName() {
     return () => window.clearInterval(id);
   }, [skip, phase]);
 
-  const display = skip ? NAME : NAME.slice(0, shown);
+  const display = skip ? name : name.slice(0, shown);
   const showCursor = !skip && phase !== "done";
   const cursorOn =
     phase === "type" || ((phase === "pre" || phase === "post") && blinkOn);
 
   return (
-    <h1 className="font-display site-name w-full text-ink">
-      <span className="sr-only">{NAME}</span>
+    <h1 className="page-title w-full text-ink">
+      <span className="sr-only">{name}</span>
       <span aria-hidden="true" className="relative block">
-        <span className="invisible">{NAME}</span>
+        <span className="invisible">{name}</span>
         <span className="absolute inset-0">
           {display}
           {showCursor ? (
             <span
-              className={`ml-[0.06em] inline-block h-[0.78em] w-[0.42em] translate-y-[0.08em] bg-accent align-baseline transition-opacity duration-150 ${
+              className={`ml-[0.06em] inline-block h-[0.78em] w-[0.42em] translate-y-[0.04em] bg-accent align-baseline transition-opacity duration-150 ${
                 cursorOn ? "opacity-100" : "opacity-0"
               }`}
             />

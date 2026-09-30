@@ -2,15 +2,11 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main id="main" className="page-pad section-y">
-      <h1 className="font-display text-[clamp(2rem,5vw,4rem)] text-ink">
-        Page not found
-      </h1>
-      <p className="mt-4 max-w-[42ch] text-ink-muted">
-        That URL is not on this site. Head back to work or the home page.
-      </p>
+    <main id="main" className="box-pad section-y min-w-0">
+      <h1 className="page-title text-ink">Not found</h1>
+      <p className="page-subtitle mt-3 max-w-[42ch] text-ink">That URL is not on this site.</p>
       <p className="mt-8">
-        <Link href="/" className="text-accent hover:underline">
+        <Link href="/" className="btn-accent">
           Home
         </Link>
       </p>

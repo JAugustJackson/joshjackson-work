@@ -1,50 +1,76 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (@media (prefers-color-scheme: dark));
 
-:root {
-  --paper: #fffefa;
-  --paper-raised: #f7f5f0;
-  --ink: #2e2e2c;
-  --ink-muted: #5c5b57;
-  --accent: #d22027;
-  --accent-soft: color-mix(in srgb, var(--accent) 14%, var(--paper));
-  --line: #e4e2dc;
-  --shadow: color-mix(in srgb, var(--ink) 10%, transparent);
+@custom-variant rail-open {
+  @media (min-width: 1024px) {
+    html[data-rail="expanded"] & {
+      @slot;
+    }
+  }
 }
 
-.dark {
-  --paper: #1c1b19;
-  --paper-raised: #262522;
-  --ink: #f4f2ec;
-  --ink-muted: #b8b4ac;
-  --accent: #e04a4f;
-  --accent-soft: color-mix(in srgb, var(--accent) 18%, var(--paper));
-  --line: #3a3834;
-  --shadow: rgb(0 0 0 / 0.35);
+:root {
+  color-scheme: light dark;
+  --canvas: #e1dfd7;
+  --paper: #fffefa;
+  --ink: #2e2e2c;
+  --ink-muted: #5c5b57;
+  --ink-faint: #8f8e87;
+  --accent: #d22027;
+  --chip: #e1dfd7;
+  --line: #e4e2dc;
+  --line-strong: #a5a59d;
+  --callout: color-mix(in srgb, var(--ink) 5%, var(--paper));
+  --shadow: color-mix(in srgb, var(--ink) 10%, transparent);
+  --box-shadow: 0 0 8px rgb(0 0 0 / 0.25);
+
+  --rail-w: 104px;
+  --status-h: 85px;
+  --burger-gutter: 30px;
+  --mobile-rail-w: 75px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas: #121110;
+    --paper: #1c1b19;
+    --ink: #f4f2ec;
+    --ink-muted: #b8b4ac;
+    --ink-faint: #8a877f;
+    --accent: #e04a4f;
+    --chip: #302e2a;
+    --line: #3a3834;
+    --line-strong: #5a5750;
+    --shadow: rgb(0 0 0 / 0.35);
+    --box-shadow: 0 0 10px rgb(0 0 0 / 0.6);
+  }
 }
 
 @theme inline {
+  --color-canvas: var(--canvas);
   --color-paper: var(--paper);
-  --color-paper-raised: var(--paper-raised);
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
   --color-accent: var(--accent);
-  --color-accent-soft: var(--accent-soft);
+  --color-chip: var(--chip);
   --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-callout: var(--callout);
   --font-sans: var(--font-jost);
   --font-display: var(--font-russo);
 }
 
 html {
-  background: var(--paper);
+  background: var(--canvas);
   color: var(--ink);
   overflow-x: clip;
   max-width: 100%;
 }
 
 body {
-  background: var(--paper);
+  background: var(--canvas);
   color: var(--ink);
   font-family: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
   overflow-x: clip;
@@ -52,40 +78,297 @@ body {
   min-width: 0;
 }
 
-body > * {
-  min-width: 0;
-  max-width: 100%;
-}
-
 ::selection {
   background: var(--accent);
   color: var(--paper);
 }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Type ---------- */
 
 .font-display {
   font-family: var(--font-russo), ui-sans-serif, system-ui, sans-serif;
   letter-spacing: -0.02em;
 }
 
-.page-pad {
-  padding-inline: clamp(1.25rem, 4vw, 4.5rem);
-}
-
-.section-y {
-  padding-block: clamp(3.5rem, 8vw, 8rem);
-}
-
-.site-name {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  font-size: clamp(2.6rem, 13vw, 7.25rem);
-  line-height: 0.95;
+.page-title {
+  font-family: var(--font-russo), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2.875rem, 8.2vw, 8.0625rem);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
   overflow-wrap: break-word;
 }
 
-@media (min-width: 768px) {
-  .site-name {
-    font-size: clamp(2.35rem, calc(100vw / 12.5), 7.25rem);
+.page-subtitle {
+  font-size: clamp(1.3875rem, 2.05vw, 2.0125rem);
+  line-height: 1.2;
+}
+
+.section-heading {
+  font-size: clamp(1.75rem, 2.9vw, 2.625rem);
+  font-weight: 500;
+  line-height: 1.24;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.body-lg {
+  font-size: clamp(1.0625rem, 1.4vw, 1.2625rem);
+  line-height: 1.62;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---------- Layout ---------- */
+
+.box-pad {
+  padding-inline: clamp(1.875rem, 4.2vw, 5rem);
+}
+
+.section-y {
+  padding-block: clamp(2.5rem, 4.2vw, 5rem);
+}
+
+/* ---------- App shell ---------- */
+
+html[data-rail="expanded"] {
+  --rail-w: 238px;
+}
+
+.shell-main {
+  margin-left: var(--rail-w);
+}
+
+.shell-rail {
+  width: var(--rail-w);
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  html,
+  html[data-rail="expanded"] {
+    --rail-w: 104px;
   }
+}
+
+@media (max-width: 767px) {
+  html,
+  html[data-rail="expanded"] {
+    --rail-w: 0px;
+    --status-h: 65px;
+  }
+
+  .shell-main {
+    margin-left: var(--burger-gutter);
+    width: calc(100vw - var(--burger-gutter));
+    transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .shell[data-nav="open"] .shell-main {
+    transform: translateX(calc(var(--mobile-rail-w) - var(--burger-gutter)));
+  }
+
+  .shell-rail {
+    width: var(--mobile-rail-w);
+    visibility: hidden;
+    transition: visibility 0s linear 280ms;
+  }
+
+  .shell[data-nav="open"] .shell-rail {
+    visibility: visible;
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell-main,
+  .shell-rail {
+    transition: none !important;
+  }
+}
+
+html.swipe-enabled body {
+  touch-action: pan-y pinch-zoom;
+}
+
+.body-box {
+  background: var(--paper);
+  border-radius: 20px 0 0 20px;
+  box-shadow: var(--box-shadow);
+}
+
+/* ---------- Components ---------- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  background: var(--chip);
+  padding: 0.15rem 0.4rem;
+  font-size: 0.625rem;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 4px;
+  background: var(--accent);
+  padding: 0.55rem 1.1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fffefa;
+  transition: background-color 150ms, color 150ms;
+}
+
+.btn-accent:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ---------- Markdown prose ---------- */
+
+.prose-jj {
+  font-size: clamp(1.0625rem, 1.4vw, 1.2625rem);
+  line-height: 1.62;
+  color: var(--ink);
+}
+
+.prose-jj > * + * {
+  margin-top: 1.25em;
+}
+
+.prose-jj :where(p, ul, ol, h2, h3, blockquote) {
+  max-width: 70ch;
+}
+
+.prose-jj h2 {
+  margin-top: 1.9em;
+  font-size: clamp(1.75rem, 2.9vw, 2.625rem);
+  font-weight: 500;
+  line-height: 1.24;
+}
+
+.prose-jj h3 {
+  margin-top: 1.6em;
+  font-size: clamp(1.3rem, 1.9vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.prose-jj :where(h2, h3) + * {
+  margin-top: 0.8em;
+}
+
+.prose-jj a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.2em;
+  transition: color 150ms;
+}
+
+.prose-jj a:hover {
+  color: var(--accent);
+}
+
+.prose-jj ul {
+  list-style: disc;
+  padding-left: 1.25em;
+}
+
+.prose-jj ol {
+  list-style: decimal;
+  padding-left: 1.25em;
+}
+
+.prose-jj li + li {
+  margin-top: 0.4em;
+}
+
+.prose-jj blockquote {
+  border-left: 2px solid var(--line-strong);
+  padding-left: 1.25em;
+  color: var(--ink-muted);
+}
+
+.prose-jj figure {
+  margin-block: 2.25em;
+}
+
+.prose-jj figure img,
+.prose-jj > p > img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+}
+
+.prose-jj figcaption {
+  margin-top: 0.6rem;
+  text-align: center;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.prose-jj .callout {
+  margin-block: 2em;
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  background: var(--callout);
+  padding: 1.25rem 1.5rem 1.4rem;
+}
+
+.prose-jj .callout > * + * {
+  margin-top: 0.75em;
+}
+
+.prose-jj .callout-title {
+  font-size: clamp(1.25rem, 1.7vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+
+.prose-jj .table-wrap {
+  overflow-x: auto;
+}
+
+.prose-jj table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.prose-jj :where(th, td) {
+  border: 1px solid var(--line-strong);
+  padding: 0.5em 0.75em;
+  text-align: left;
+}
+
+.prose-jj th {
+  font-weight: 600;
+}
+
+.prose-intro > * + * {
+  margin-top: 1em;
 }

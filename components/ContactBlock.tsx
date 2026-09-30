@@ -1,37 +1,36 @@
-import { profile } from "@/content/profile";
-
-const items = [
-  { label: "Location", value: profile.location },
-  { label: "Phone", value: profile.phone, href: profile.phoneHref },
-  { label: "Profile", value: profile.linkedinLabel, href: profile.linkedinHref },
-  { label: "Email", value: profile.email, href: profile.emailHref },
-] as const;
+import { getSite } from "@/lib/content/load";
 
 export function ContactBlock({
-  compact = false,
+  size = "md",
+  labelFont = "sans",
 }: {
-  compact?: boolean;
+  size?: "sm" | "md";
+  labelFont?: "sans" | "display";
 }) {
+  const { contact } = getSite();
+
   return (
     <ul
-      className={`grid w-full min-w-0 gap-x-4 ${
-        compact
-          ? "grid-cols-1 text-sm sm:grid-cols-2 lg:grid-cols-1"
-          : "grid-cols-1 text-[0.95rem] sm:grid-cols-2 lg:grid-cols-1 lg:text-[clamp(0.85rem,1.05vw,1.05rem)]"
+      className={`grid w-full min-w-0 ${
+        size === "sm" ? "text-sm" : "text-[0.94375rem]"
       }`}
     >
-      {items.map((item) => (
+      {contact.map((item) => (
         <li
           key={item.label}
-          className="grid min-w-0 grid-cols-[4.75rem_minmax(0,1fr)] items-baseline gap-3 py-1 sm:grid-cols-[7.25rem_minmax(0,1fr)]"
+          className="grid min-w-0 grid-cols-[4.25rem_minmax(0,1fr)] items-baseline gap-3 py-1 sm:grid-cols-[5.5rem_minmax(0,1fr)]"
         >
-          <span className="font-display text-[0.68rem] uppercase tracking-[0.12em] text-ink-muted">
+          <span
+            className={`text-[0.68rem] uppercase tracking-[0.02em] text-ink ${
+              labelFont === "display" ? "font-display" : ""
+            }`}
+          >
             {item.label}
           </span>
-          {"href" in item && item.href ? (
+          {item.href ? (
             <a
               href={item.href}
-              className="min-w-0 [overflow-wrap:anywhere] text-ink underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+              className="min-w-0 [overflow-wrap:anywhere] text-ink underline decoration-ink/40 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
             >
               {item.value}
             </a>

@@ -42,3 +42,6 @@ next-env.d.ts
 
 # local palette samples
 .tmp-palette/
+
+# impeccable hook cache
+.impeccable/hook.cache.json
