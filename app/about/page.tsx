@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { DownloadSimple } from "@phosphor-icons/react/ssr";
 import { ContactBlock } from "@/components/ContactBlock";
+import { FaIcon } from "@/components/icons/FaIcon";
 import { getPage, getSite } from "@/lib/content/load";
 import { Markdown } from "@/lib/content/markdown";
 
@@ -25,7 +25,7 @@ export default function AboutPage() {
             <ContactBlock />
             <a href={site.resumePdf.href} className="btn-accent mt-6">
               {site.resumePdf.label}
-              <DownloadSimple size={16} weight="bold" aria-hidden="true" />
+              <FaIcon icon="solid/arrow-down-to-line" size={14} />
             </a>
           </div>
         </div>

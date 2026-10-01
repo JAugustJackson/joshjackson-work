@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "@phosphor-icons/react/ssr";
+import { FaIcon } from "@/components/icons/FaIcon";
 import { ContactBlock } from "@/components/ContactBlock";
 import { PortfolioCard } from "@/components/portfolio/PortfolioCard";
 import { ToolsSection } from "@/components/ToolsSection";
@@ -83,7 +83,7 @@ export default function HomePage() {
             className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.14em] text-ink transition-colors hover:text-accent"
           >
             {home.tools.cta.label}
-            <ArrowRight size={16} weight="bold" aria-hidden="true" />
+            <FaIcon icon="solid/arrow-right" size={14} />
           </Link>
         </div>
         <div className="mt-[clamp(1.5rem,2.5vw,2.5rem)]">

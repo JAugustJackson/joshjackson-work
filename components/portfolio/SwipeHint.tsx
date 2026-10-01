@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
-import { HandSwipeLeft } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
+import { FaIcon } from "@/components/icons/FaIcon";
 import { SWIPED_EVENT, SWIPE_QUERY } from "./SwipeNav";
 
 const STORAGE_KEY = "swipeHintSeen";
@@ -73,7 +73,7 @@ export function SwipeHint() {
           animate={reduce ? undefined : { x: [18, -18, 18] }}
           transition={reduce ? undefined : { duration: 1.6, ease: "easeInOut", repeat: Infinity }}
         >
-          <HandSwipeLeft size={56} weight="duotone" />
+          <FaIcon icon="duotone/hand-pointer" size={48} />
         </motion.span>
         <span className="text-lg leading-snug font-medium">
           Swipe left or right to move between portfolio items

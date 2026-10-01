@@ -3,16 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useSyncExternalStore } from "react";
-import {
-  Briefcase,
-  ChatText,
-  FileText,
-  House,
-  IdentificationCard,
-  Info,
-  Wrench,
-  type Icon,
-} from "@phosphor-icons/react";
+import { FaIcon } from "@/components/icons/FaIcon";
 import { isActive, liveNavItems, type NavIcon, type NavPortfolioItem } from "@/lib/nav";
 import {
   RAIL_STORAGE_KEY,
@@ -22,14 +13,16 @@ import {
 } from "@/lib/rail";
 import { Monogram } from "./Monogram";
 
-const icons: Record<NavIcon, Icon> = {
-  home: House,
-  portfolio: Briefcase,
-  about: Info,
-  tools: Wrench,
-  contact: IdentificationCard,
-  chat: ChatText,
-};
+const glyphs = {
+  home: "house",
+  portfolio: "briefcase",
+  about: "square-info",
+  tools: "screwdriver-wrench",
+  contact: "address-card",
+  chat: "message-lines",
+} as const satisfies Record<NavIcon, string>;
+
+const weight = (on: boolean) => (on ? "solid" : "regular");
 
 function subscribeRail(onChange: () => void) {
   const observer = new MutationObserver(onChange);
@@ -116,23 +109,24 @@ export function NavRail({
         </button>
       </div>
 
-      <div className="mx-auto h-0.5 w-[41px] bg-ink max-md:mt-[66px] max-md:w-[26px] rail-open:mx-5 rail-open:w-auto" />
+      <div className="mx-auto h-0.5 w-[41px] bg-ink/10 max-md:mt-[66px] max-md:w-[26px] rail-open:mx-5 rail-open:w-auto" />
 
       <ul className="flex flex-col items-center gap-[15px] px-2.5 pt-[25px] pb-8 md:gap-[30px] rail-open:items-stretch rail-open:px-5">
         {liveNavItems.map((item) => {
           const active = isActive(pathname, item.href);
-          const Icon = icons[item.icon];
           return (
             <li key={item.id}>
               <Link
                 href={item.href}
                 onClick={onNavigate}
                 aria-current={active ? "page" : undefined}
-                className={`group flex h-[50px] items-center gap-4 transition-colors ${
+                className={`group flex h-[50px] items-center gap-[15px] transition-colors ${
                   active ? "text-accent" : "text-ink hover:text-accent"
                 }`}
               >
-                <Icon size={30} weight={active ? "fill" : "regular"} className="shrink-0" />
+                <span className="flex w-[34px] shrink-0 justify-center">
+                  <FaIcon icon={`${weight(active)}/${glyphs[item.icon]}`} size={30} />
+                </span>
                 <span className="sr-only rail-open:not-sr-only rail-open:text-sm rail-open:font-medium rail-open:uppercase rail-open:tracking-[0.14em]">
                   {item.label}
                 </span>
@@ -152,7 +146,7 @@ export function NavRail({
                             current ? "text-accent" : "text-ink hover:text-accent"
                           }`}
                         >
-                          <FileText size={14} weight={current ? "fill" : "regular"} className="shrink-0" />
+                          <FaIcon icon={`${weight(current)}/file-lines`} size={13} className="shrink-0" />
                           <span className="truncate">{entry.navTitle}</span>
                         </Link>
                       </li>

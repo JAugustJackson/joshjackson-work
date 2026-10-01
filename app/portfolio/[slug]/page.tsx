@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "@phosphor-icons/react/ssr";
+import { FaIcon } from "@/components/icons/FaIcon";
 import { SwipeHint } from "@/components/portfolio/SwipeHint";
 import { SwipeNav } from "@/components/portfolio/SwipeNav";
 import {
@@ -80,9 +80,9 @@ function AdjacentLink({ item, direction }: { item: PortfolioItem; direction: "pr
       }`}
     >
       <span className="flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-ink-muted">
-        {next ? null : <ArrowLeft size={14} weight="bold" aria-hidden="true" />}
+        {next ? null : <FaIcon icon="solid/arrow-left" size={12} />}
         {next ? "Next" : "Previous"}
-        {next ? <ArrowRight size={14} weight="bold" aria-hidden="true" /> : null}
+        {next ? <FaIcon icon="solid/arrow-right" size={12} /> : null}
       </span>
       <span className="text-lg font-medium uppercase text-ink transition-colors group-hover:text-accent">
         {item.title}
@@ -120,7 +120,7 @@ export default async function PortfolioItemPage({ params }: PageProps<"/portfoli
               className="mt-5 inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.14em] text-ink transition-colors hover:text-accent"
             >
               Live at {item.live.label}
-              <ArrowUpRight size={16} weight="bold" aria-hidden="true" />
+              <FaIcon icon="solid/arrow-up-right" size={14} />
             </a>
           ) : null}
         </header>
