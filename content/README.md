@@ -59,6 +59,12 @@ An image on its own line with a title (the quoted text) becomes a bordered figur
 ![Alt text for screen readers](/images/portfolio/halo-framer/01-home.png "Caption shown under the image")
 ```
 
+End the path with `#right` (or `#left`) for a small captioned figure that floats beside the text. Put it on the line before the paragraph it should sit next to. On phones it stacks, centered, above that paragraph.
+
+```markdown
+![Alt text](/images/portfolio/gligh/04-logo.webp#right "Caption shown under the image")
+```
+
 Without a title it renders as a plain image. Width and height are read from the file, so you never type dimensions. A missing image file fails the build.
 
 ### Sidebar callouts
@@ -70,7 +76,24 @@ A blockquote whose first line is bold becomes a callout with a red rule:
 > The font picked up its working name...
 ```
 
-A blockquote without a bold first line stays a normal quote.
+A blockquote that is one fully italic line becomes a large pull quote:
+
+```markdown
+> *Starting over isn't a dirty word anymore, at least not for me.*
+```
+
+Any other blockquote stays a normal quote.
+
+### Link cards
+
+A link whose text is `card`, on its own line, becomes a preview card (image on the left, site, title, and description on the right) that opens in a new tab:
+
+```markdown
+[card](https://www.coglode.com)
+[card](https://www.coglode.com "Override the fetched title")
+```
+
+The preview comes from the page's Open Graph tags. `npm run dev` and `npm run build` fetch any new card URLs first, saving the data to `content/link-cards.json` and the image to `public/images/link-cards/`. Commit both. Already-cached URLs are never refetched; run `npm run link-cards -- --refresh` to update them. If a site can't be reached, the card still renders with just its domain, and the build doesn't fail.
 
 ### Notes to yourself
 
@@ -86,6 +109,7 @@ public/images/
   portfolio/<slug>/cover.png         card image (about 1.9:1, 1272px wide or more)
   portfolio/<slug>/01-*.png          figures, numbered in the order they appear
   brands/*.svg                       Portfolio logo wall (single-color logos, inverted in dark mode)
+  link-cards/*                       link card previews, written by `npm run link-cards`
 ```
 
 ## Static pages

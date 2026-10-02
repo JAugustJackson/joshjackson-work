@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/link-cards.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/link-cards.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "icons": "node scripts/build-icons.mjs"
+    "icons": "node scripts/build-icons.mjs",
+    "link-cards": "node scripts/link-cards.mjs"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

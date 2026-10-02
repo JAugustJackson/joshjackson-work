@@ -337,6 +337,21 @@ html.swipe-enabled body {
   color: var(--ink-muted);
 }
 
+.prose-jj .pullquote {
+  margin-block: 2em;
+  border-left: 4px solid var(--accent);
+  padding: 0.2em 0 0.2em 1.25em;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.prose-jj .pullquote > p {
+  max-width: 34ch;
+}
+
 .prose-jj figure {
   margin-block: 2.25em;
 }
@@ -347,6 +362,33 @@ html.swipe-enabled body {
   height: auto;
   border: 1px solid var(--line-strong);
   border-radius: 16px;
+}
+
+.prose-jj :where(h2, h3) {
+  clear: both;
+}
+
+.prose-jj :where(.figure-right, .figure-left) {
+  width: min(100%, 14rem);
+  margin: 2em auto;
+}
+
+@media (min-width: 640px) {
+  .prose-jj .figure-right {
+    float: right;
+    width: min(38%, 16rem);
+    margin: 0.4em max(0px, calc(100% - 70ch)) 1em 1.75em;
+  }
+
+  .prose-jj .figure-left {
+    float: left;
+    width: min(38%, 16rem);
+    margin: 0.4em 1.75em 1em 0;
+  }
+}
+
+.prose-jj :where(.figure-right, .figure-left) figcaption {
+  font-size: 0.8rem;
 }
 
 .prose-jj figcaption {
@@ -369,6 +411,10 @@ html.swipe-enabled body {
   padding: 1.25rem 1.5rem 1.4rem;
 }
 
+.prose-jj .callout > * {
+  max-width: none;
+}
+
 .prose-jj .callout > * + * {
   margin-top: 0.75em;
 }
@@ -379,6 +425,70 @@ html.swipe-enabled body {
   line-height: 1.5;
   letter-spacing: -0.02em;
   color: var(--accent);
+}
+
+.prose-jj .link-card {
+  display: flex;
+  max-width: 70ch;
+  margin-block: 2em;
+  overflow: hidden;
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  background: var(--callout);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 150ms;
+}
+
+.prose-jj .link-card:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 9%, var(--paper));
+}
+
+.prose-jj .link-card-media {
+  flex: none;
+  width: clamp(5.5rem, 30%, 11rem);
+  border-right: 1px solid var(--line);
+}
+
+.prose-jj .link-card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.prose-jj .link-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+  padding: 1rem 1.25rem 1.1rem;
+}
+
+.prose-jj .link-card-site {
+  font-size: 0.85rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.prose-jj .link-card-title {
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--accent);
+}
+
+.prose-jj .link-card-desc {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
 }
 
 .prose-jj .table-wrap {

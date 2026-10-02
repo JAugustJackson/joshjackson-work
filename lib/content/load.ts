@@ -47,6 +47,22 @@ export function getImageSize(src: string, where: string) {
   return { width: size.width, height: size.height };
 }
 
+export type LinkCard = {
+  title: string;
+  description: string;
+  siteName: string;
+  image?: string;
+};
+
+const loadLinkCards = cache((): Record<string, LinkCard> => {
+  const file = path.join(CONTENT_DIR, "link-cards.json");
+  return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : {};
+});
+
+export function getLinkCard(url: string) {
+  return loadLinkCards()[url];
+}
+
 export const getSite = cache(() => readMarkdown("site.md", siteSchema).data);
 
 const loadPage = cache((name: PageName) =>
