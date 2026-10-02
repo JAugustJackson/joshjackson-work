@@ -1,0 +1,20 @@
+{
+  "https://www.coglode.com": {
+    "title": "Coglode",
+    "description": "Get bite-size behavioural insights, learn methods and apply them artfully to solve your problems with greater impact",
+    "siteName": "coglode.com",
+    "image": "/images/link-cards/coglode-com.png"
+  },
+  "https://www.framer.com/marketplace/plugins/gligh/": {
+    "title": "Gligh — Plugin for Framer",
+    "description": "Every glyph, one click away — Gligh is a Framer plugin for Styles, on the Framer Marketplace. Build on it with Framer's agent, directly on the canvas.",
+    "siteName": "Framer Marketplace",
+    "image": "/images/link-cards/framer-com-marketplace-plugins-gligh.jpg"
+  },
+  "https://yukaichou.com/gamification-examples/octalysis-gamification-framework/": {
+    "title": "The Octalysis Framework: 8 Core Drives of Gamification",
+    "description": "Octalysis is Yu-kai Chou's gamification framework, built on 8 Core Drives of human motivation. Used by Google, Tesla, and LEGO. Cited in 3,700+ studies.",
+    "siteName": "Yu-kai Chou",
+    "image": "/images/link-cards/yukaichou-com-gamification-examples-octalysis-gamification-framework.png"
+  }
+}
